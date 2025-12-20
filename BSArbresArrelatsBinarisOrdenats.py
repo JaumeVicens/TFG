@@ -15,4 +15,5 @@ def BSArbresArrelatsBinarisOrdenats(x):
     else:
         return ('*',BSArbresArrelatsBinarisOrdenats(x),BSArbresArrelatsBinarisOrdenats(x))
 
-#print(BSArbresArrelatsBinarisOrdenats(0.499))
+#print(BSArbresArrelatsBinarisOrdenats(0.499))    # el valor crític es 1/2
+
