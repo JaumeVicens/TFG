@@ -5,7 +5,7 @@ import numpy as np
 # Boltzmann Sampler per a seqüencies de longitud menor o igual a un m fixat, d'una classe
 # combinatòria finita A
 
-#tens un full explicant perquè és aquest el BS
+#tens un full explicant perquè és aquest el BS. Es te l'especificacio {e} U A U AxA U ··· U A^m
 def BoltzmannSamplerSequenciaMenorIgual(A,x,m):
     llista = []  #llista on anirem guardant els s_j
     sum = 0
@@ -37,17 +37,9 @@ classe = {'0': 1}
 def BoltzmannSamplerSequenciaEntre1im(A,x,m):
     return (BoltzmannSamplerFinit(A,x),BoltzmannSamplerSequenciaMenorIgual(A,x,m-1))
             #feim dues cridades independents, pagina 10 article, i tenim
-            # d'especificació esmentada
+            # l'especificació esmentada
 
 #print(BoltzmannSamplerSequenciaEntre1im(classe,0.7,4))
-
-
-#funcio que retorna els objectes d'una classe combinatoria binària a una llista
-#def classeallista(A):
-    #llista = []
-    #for i in A:
-        #llista.append(i)
-    #return llista
 
 
 #funcio que retorna el BS de Seq(Seq(A)_{1,...,m}xSeq_{1,...,m}(B)), tenguent en compte
@@ -59,7 +51,6 @@ def BSSeqProducte(A,B,x,m):
     if u <= (x**2*(1-x**m)**2)/(1-x)**2:  #sa funcio generatriu de lo que hi ha dins Seq()
         return (BoltzmannSamplerSequenciaEntre1im(A,x,m),
                 BoltzmannSamplerSequenciaEntre1im(B,x,m),BSSeqProducte(A,B,x,m))
-
     else:
         return ''
 
@@ -78,4 +69,3 @@ classe2 = {'b': 1}
 
 print(BSlongrunm(classe1,classe2,0.5,4))  # es valor crític es 0.51879 (treurerlo a partir de sa
                                   # funció generatriu amb sa m fixada
-# PAREIX QUE FUNCIONA
