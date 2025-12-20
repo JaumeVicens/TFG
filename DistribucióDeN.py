@@ -1,14 +1,12 @@
 import math
-#from BoltzmannSamplerFinit import generatriu_avaluada
 import matplotlib.pyplot as plt
-#import numpy as np
 
 
 # funció que retorna el grafic de la distribució de la variable aletoria N
 # per a cada x>0 (coherent).
 
 #cas de les seqüències binàries. Retorna P(N=t). Es necessari conèixer C_n per això se fa
-# cada cas per separat
+# cada cas per separat (expressió (2.3) de l'article)
 def DistrubucioNParaulesBinaries(x,t):
 
     return ((1-2*x))*2**t*x**t
@@ -18,7 +16,7 @@ def DistrubucioNParaulesBinaries(x,t):
 #y = [DistrubucioNParaulesBinaries(0.4,i) for i in t]
 
 #plt.plot(t,y)
-#plt.show()
+#plt.show()          # es del mateix tipus que 'surjections'. A mesura que x s'aproxima al valor crític és va aplantan el gràfic
 
 
 #cas dels arbres arrelats binaris ordenats amb funcio de mida donada pel nombre total de nodes
@@ -33,7 +31,8 @@ def DistrubucioNABOT(x,t):
 
 t = [i for i in range(15)]
 
-y = [DistrubucioNABOT(0.4999,i) for i in t]
+y = [DistrubucioNABOT(0.4999,i) for i in t]     # el valor crític es 1/2
 
-plt.plot(t,y)    #comprovar aquest darrer cas. Ara si funciona en principi
+plt.plot(t,y)    #objectes amb mida petitat tenen gran probabilitat de ser generats
 plt.show()
+
