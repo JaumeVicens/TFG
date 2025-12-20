@@ -1,0 +1,81 @@
+from BoltzmannSamplerFinit import BoltzmannSamplerFinit
+from BoltzmannSamplerFinit import generatriu_avaluada
+import numpy as np
+
+# Boltzmann Sampler per a seqüencies de longitud menor o igual a un m fixat, d'una classe
+# combinatòria finita A
+
+#tens un full explicant perquè és aquest el BS
+def BoltzmannSamplerSequenciaMenorIgual(A,x,m):
+    llista = []  #llista on anirem guardant els s_j
+    sum = 0
+    for j in range(m+1):
+        sum += generatriu_avaluada(A,x)**j
+        llista.append(sum/((1-generatriu_avaluada(A,x)**(m+1))/(1-generatriu_avaluada(A,x))))
+                            # això d'aquí adalt es sa funció generatriu de sa classe
+
+    u = np.random.uniform(0,1)
+    triat = None
+    for j in range(m+1):
+        if u <= llista[j]:
+            triat = j
+            break
+
+    if triat == 0:
+        return ''
+
+    else:
+        return tuple(BoltzmannSamplerFinit(A,x) for i in range(triat))
+
+classe = {'0': 1}
+
+#print(BoltzmannSamplerSequenciaMenorIgual(classe,0.85,4))
+
+# BS per a les seqüències entre 1 i m elements (la seqüència buida no està permesa). Podem
+# construirlo a partir de l'anterior, tenguent en compte que Seq_{1,...,m}(A)=AxSeq_{<=m-1}(A)
+
+def BoltzmannSamplerSequenciaEntre1im(A,x,m):
+    return (BoltzmannSamplerFinit(A,x),BoltzmannSamplerSequenciaMenorIgual(A,x,m-1))
+            #feim dues cridades independents, pagina 10 article, i tenim
+            # d'especificació esmentada
+
+#print(BoltzmannSamplerSequenciaEntre1im(classe,0.7,4))
+
+
+#funcio que retorna els objectes d'una classe combinatoria binària a una llista
+#def classeallista(A):
+    #llista = []
+    #for i in A:
+        #llista.append(i)
+    #return llista
+
+
+#funcio que retorna el BS de Seq(Seq(A)_{1,...,m}xSeq_{1,...,m}(B)), tenguent en compte
+# que coneixem els BS dels factors de dins la seq, on A,B son classe qualsevol finites.
+# ho aplicarem llavors per a A={'a': 1} i B={'b': 1}
+
+def BSSeqProducte(A,B,x,m):
+    u = np.random.uniform(0,1)
+    if u <= (x**2*(1-x**m)**2)/(1-x)**2:  #sa funcio generatriu de lo que hi ha dins Seq()
+        return (BoltzmannSamplerSequenciaEntre1im(A,x,m),
+                BoltzmannSamplerSequenciaEntre1im(B,x,m),BSSeqProducte(A,B,x,m))
+
+    else:
+        return ''
+
+
+# BS per a 'longruns' d'objectes de dues classes combinatòries A i B on no hi ha mes de m
+# repeticions seguides d'objectes d'una mateixa classe. Se té s'especificació recursiva de la
+# pàg. 13 per tant es fer 3 crides independents. S'aplica llavors al cas en que A = {'a': 1}
+# i B = {'b': 1}
+
+def BSlongrunm(A,B,x,m):
+    return (BoltzmannSamplerSequenciaMenorIgual(B,x,m),BSSeqProducte(A,B,x,m),
+            BoltzmannSamplerSequenciaMenorIgual(A,x,m))
+
+classe1 = {'a': 1}
+classe2 = {'b': 1}
+
+print(BSlongrunm(classe1,classe2,0.5,4))  # es valor crític es 0.51879 (treurerlo a partir de sa
+                                  # funció generatriu amb sa m fixada
+# PAREIX QUE FUNCIONA
