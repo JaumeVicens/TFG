@@ -1,11 +1,11 @@
 import numpy as np
 
-#funcio que donada una classe combinatòria (en forma de diccionari) on cada objecte (clau)
+#funcio que donada una classe combinatòria finita (en forma de diccionari) on cada objecte (clau)
 # té associat una mida (valor) retorna sa funcio generatriu avaluada a x
 def generatriu_avaluada(dicc,x):
     sum = 0
-    for i in dicc:
-        sum += x**dicc[i]     #dicc[i] se correspon amb sa mesura de s'objecte i
+    for i in dicc:          # recorrem els objectes de la classe
+        sum += x**dicc[i]     # dicc[i] se correspon amb sa mesura de s'objecte i
     return sum
 
 #genera un element de sa classe W={w1,...,wr} de manera aleatòria on cada element té proba
@@ -15,23 +15,18 @@ def BoltmzannSamplerFinit(dicc,x):
     sum = 0
     for i in dicc:
         sum += x**dicc[i]
-        #print(sum/generatriu_avaluada(dicc,x))
         llista.append(sum/generatriu_avaluada(dicc,x))
 
     u = np.random.uniform(0, 1)  #genera un nombre aleatori en l'interval [0,1]
-    #print(u)
     triat = None
     for j in range(len(dicc)):
         if u <= llista[j]:  #sempre es compleix per qualque j algo ja que 0<s1<···<sr=1 (si x>0)
-            triat = j   #se correspon amb l'index j de l'element w_j que hem de
-                        # retornar
-            #print(triat)
+            triat = j   #se correspon amb l'index j de l'element w_j que hem de retornar
             break       #d'aquesta manera seleccionam el primer que ho compleix
 
     #retornam l'element w_j de la classe
     iter = 0
     for i in dicc:
-        #print(i)
         if iter == triat:
             return  i
         iter += 1
@@ -39,8 +34,7 @@ def BoltmzannSamplerFinit(dicc,x):
 
 classe = {"a": 3,"b": 1, "c": 2, "d": 1, "e": 4}
 
-# té funció generatriu 2x+x^2+x^3+x^4. que té arrels (reals) x = 0 i x = −1.3532099642 (aprox)
-# per tant el model està definit per a tot x > 0.
+# té funció generatriu 2x+x^2+x^3+x^4. El model està definit per a tot x > 0.
 
 #print(BoltmzannSampler(classe, 1.79632190325944))
 #print(BoltmzannSampler(classe, 3/2))
@@ -65,14 +59,7 @@ def mida_mitjana_executar_BS(dicc,x):
 #print(mida_mitjana_executar_BS(classe, 0.5))  # els objectes amb mida menor tenem mes probabilitats de ser generats
 
 
-#funcio que ens calcula l'x talque E_x[N] = "mesura desitjada". Tenguent en compte que
-# E_x[N] = x·C'(x)/C(x)   (pendent)
 
-#def generatriu(dicc):
-    #x = symbols('x')
-    #f = 0
-    #for i in dicc:
-        #f += x**dicc[i]
 
 
 
