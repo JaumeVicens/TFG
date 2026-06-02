@@ -11,12 +11,12 @@ def DistrubucioNParaulesBinaries(x,t):
 
     return ((1-2*x))*2**t*x**t
 
-#t = [i for i in range(50)]
+t = [i for i in range(50)]
 
-#y = [DistrubucioNParaulesBinaries(0.4,i) for i in t]
+y = [DistrubucioNParaulesBinaries(0.4,i) for i in t]
 
-#plt.plot(t,y)
-#plt.show()          # es del mateix tipus que 'surjections'. A mesura que x s'aproxima al valor crític és va aplantan el gràfic
+plt.plot(t,y)
+plt.show()          #A mesura que x s'aproxima al valor crític és va aplanant el gràfic
 
 
 #cas dels arbres arrelats binaris ordenats amb funcio de mida donada pel nombre total de nodes
@@ -29,10 +29,10 @@ def DistrubucioNABOT(x,t):
             return (1/((1-math.sqrt(1-4*x**2))/(2*x)))*(1/((t//2)+1))*math.comb(2*(t//2),(t//2))*x**t #pagina 36 tfg carla
 
 
-t = [i for i in range(15)]
+#t = [i for i in range(15)]
 
-y = [DistrubucioNABOT(0.4999,i) for i in t]     # el valor crític es 1/2
+#y = [DistrubucioNABOT(0.4999,i) for i in t]     # el valor crític es 1/2
 
-plt.plot(t,y)    #objectes amb mida petitat tenen gran probabilitat de ser generats
-plt.show()
+#plt.plot(t,y)    #objectes amb mida petitat tenen gran probabilitat de ser generats
+#plt.show()
 
