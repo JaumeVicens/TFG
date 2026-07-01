@@ -11,7 +11,7 @@ def Cbullet(x):
     return x / math.sqrt(1 - 4*x)
 
 
-# Excepción para abortar cuando el árbol es demasiado grande
+# Excepció per abortar quan l'arbre es massa gran
 class ArbreGranError(Exception):
     pass
 
